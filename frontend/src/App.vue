@@ -1,47 +1,37 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { useFetchStore } from './stores/fetchStore'
+
+const fetchStore = useFetchStore()
+
+fetchStore.fetchJpa()
+fetchStore.fetchR2()
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <b>jpa:</b>
+      </div>
+      <div class="col-6" v-for="item in fetchStore.jpaData">
+          {{ item }}
+        </div>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div class="row">
+      <div class="col">
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <b>r2dbc:</b>
+      </div>
+      <div class="col-3" v-for="item in fetchStore.r2dbcData">
+          {{ item }}
+        </div>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
