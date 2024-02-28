@@ -4,6 +4,7 @@ import com.tibame201020.backend.domain.EntityObj;
 import com.tibame201020.backend.jpa.EntityObjJpa;
 import com.tibame201020.backend.r2dbc.EntityObjR2dbc;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -17,11 +18,13 @@ public class RestApi {
     private final EntityObjJpa entityObjJpa;
     private final EntityObjR2dbc entityObjR2dbc;
 
+    @Transactional(transactionManager = "transactionManager")
     @RequestMapping("/jpa")
     public List<EntityObj> useJpa() {
         return entityObjJpa.findAll();
     }
 
+    @Transactional(transactionManager = "connectionFactoryTransactionManager")
     @RequestMapping("/r2dbc")
     public Flux<EntityObj> useR2dbc() {
         return entityObjR2dbc.findAll();
