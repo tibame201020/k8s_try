@@ -3,7 +3,7 @@ basic frontend <=> backend <=> database
 ```
 sh database.sh
 ```
-### backend
+### backend image
 ```
 cd backend
 ```
