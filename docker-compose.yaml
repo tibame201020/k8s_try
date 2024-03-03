@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  app-frontend:
+    image: k8s_frontend
+    restart: always
+    environment:
+      - VITE_API_URL=http://app-backend
+    ports:
+      - 5173:80
+    networks:
+      - front2back
+
+  app-backend:
+    image: k8s_backend
+    restart: always
+    environment:
+      - DB_HOST_IP=app-database
+      - DB_NAME=dbWithDockerCompose
+      - DB_USERNAME=userWithDockerCompose
+      - DB_PWD=userPwdWithDockerCompose
+      - TZ=Asia/Taipei
+    ports:
+      - 8099:8099
+    networks:
+      - front2back
+      - back2db
+
+  app-database:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=userWithDockerCompose
+      - MYSQL_PASSWORD=userPwdWithDockerCompose
+      - MYSQL_DATABASE=dbWithDockerCompose
+    networks:
+      - back2db
+networks:
+  front2back:
+  back2db:
+
+volumes:
+  mysql-data:

@@ -4,6 +4,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 
 export const useFetchStore = defineStore('fetchStore', {
   state: () => ({
+    apiUrl: apiUrl,
     jpaData: [],
     r2dbcData: []
 
