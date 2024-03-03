@@ -4,7 +4,7 @@ services:
     image: k8s_frontend
     restart: always
     environment:
-      - VITE_API_URL=http://app-backend
+      - MY_VAR_API_URL=http://localhost:8077
     ports:
       - 5173:80
     networks:
@@ -20,7 +20,7 @@ services:
       - DB_PWD=userPwdWithDockerCompose
       - TZ=Asia/Taipei
     ports:
-      - 8099:8099
+      - 8077:8099
     networks:
       - front2back
       - back2db
