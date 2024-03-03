@@ -10,6 +10,13 @@ fetchStore.fetchR2()
 
 <template>
   <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-12">
+        backend url: {{ fetchStore.apiUrl }}
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-12">
         <b>jpa:</b>
