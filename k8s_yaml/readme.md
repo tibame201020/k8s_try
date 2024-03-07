@@ -28,7 +28,7 @@ minikube image load k8s_backend.tar
 minikube image load k8s_frontend.tar
 ```
 ```
-minikube image load ls
+minikube image ls
 ```
 ##### enable ingress /k3s k8s_cluster may use helm install ingress
 ```
