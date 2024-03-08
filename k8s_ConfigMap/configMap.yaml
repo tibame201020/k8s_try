@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  MYSQL_ROOT_PASSWORD: root
+  MYSQL_USER: userWithK8s
+  MYSQL_PASSWORD: userPwdWithK8s
+  MYSQL_DATABASE: dbWithK8s
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  DB_HOST_IP: app-database
+  DB_NAME: dbWithK8s
+  DB_USERNAME: userWithK8s
+  DB_PWD: userPwdWithK8s
+  TZ: Asia/Taipei
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  MY_VAR_API_URL: http://localhost/backendConfigMap

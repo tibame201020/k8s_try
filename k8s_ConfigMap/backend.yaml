@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-backend
+  template:
+    metadata:
+      labels:
+        app: app-backend
+    spec:
+      containers:
+      - name: app-backend
+        image: docker.io/library/k8s_backend
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8099
+        envFrom:
+          - configMapRef:
+              name: backend-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-backend
+spec:
+  selector:
+    app: app-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8099
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backend-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  labels:
+    app: backend-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /backendConfigMap/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: app-backend
+                port:
+                  number: 80

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: app-database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-database
+  serviceName: app-database
+  template:
+    metadata:
+      labels:
+        app: app-database
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        envFrom:
+          - configMapRef:
+              name: mysql-config
+        volumeMounts:
+        - name: mysql-data
+          mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-database
+spec:
+  selector:
+    app: app-database
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
