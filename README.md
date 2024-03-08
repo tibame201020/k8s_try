@@ -1,4 +1,8 @@
 basic frontend <=> backend <=> database
+### k8s impl
+```
+https://github.com/tibame201020/k8s_try/blob/main/k8s_yaml
+```
 ### database
 ```
 sh database.sh
